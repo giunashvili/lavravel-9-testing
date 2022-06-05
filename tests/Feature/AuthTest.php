@@ -101,4 +101,16 @@ class AuthTest extends TestCase
 
        $response->assertRedirect('/company');
     }
+
+    public function test_when_user_is_not_logged_in_dont_let_him_to_the_logout_route()
+    {
+        $this->get('/logout')->assertRedirect('/login');
+    }
+
+    public function test_user_can_successfully_logout()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user)->get('/logout')->assertRedirect('/login');
+    }
+
 }
